@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Prioridade, Tarefa } from '../models/Tarefa';
+import { TarefasService } from '../service/tarefas.service';
 
 @Component({
   selector: 'app-tabela',
@@ -8,37 +9,20 @@ import { Prioridade, Tarefa } from '../models/Tarefa';
 })
 export class TabelaComponent implements OnInit {
 
-  tarefas:Tarefa[] = [
-    {
-      feita: true,
-      texto: 'Lavar louça',
-      prioridade: Prioridade.Baixa
-    },
-    {
-      feita: false,
-      texto: 'Aspirar a casa',
-      prioridade: Prioridade.Baixa
-    },
-    {
-      feita: false,
-      texto: 'Lavar roupa',
-      prioridade: Prioridade.Baixa
-    },
-    {
-      feita: false,
-      texto: 'Estudar ',
-      prioridade: Prioridade.Baixa
-    },
-    {
-      feita: false,
-      texto: 'Fazer o jantar',
-      prioridade: Prioridade.Baixa
-    },
-  ]
+  tarefas:Tarefa[]
+  
+  private tservice: TarefasService = new TarefasService();
 
-  constructor() { }
+  constructor() { 
+    this.tarefas = this.tservice.getTarefas();
+  }
 
   ngOnInit(): void {
+  }
+
+  removeTarefa(t:Tarefa){
+    this.tarefas.splice(this.tarefas.indexOf(t),1)
+
   }
 
 }
